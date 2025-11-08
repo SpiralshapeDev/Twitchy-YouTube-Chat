@@ -2,9 +2,9 @@
 // Licensed under the Apache License, Version 2.0
 // See LICENSE file for details.
 
-const newChat = document.createElement('div');
-newChat.id = 'newChatBox';
-newChat.classList.add("newChat")
+const twitchyChatBox = document.createElement('div');
+twitchyChatBox.id = 'Twitchy-Youtube-Chat';
+twitchyChatBox.classList.add("Twitchy-Youtube-Chat")
 let autoScroll = true;
 
 const MESSAGE_CLASSES = {
@@ -13,8 +13,8 @@ const MESSAGE_CLASSES = {
   filterActivated:"ylcfr-active"
 };
 
-newChat.addEventListener('scroll', () => {
-    const atBottom = (newChat.scrollHeight - newChat.scrollTop) === newChat.clientHeight;
+twitchyChatBox.addEventListener('scroll', () => {
+    const atBottom = (twitchyChatBox.scrollHeight - twitchyChatBox.scrollTop) === twitchyChatBox.clientHeight;
     autoScroll = atBottom;
 });
 
@@ -46,37 +46,53 @@ const waitForFilter = async (messageElement) => {
 const processMessage = async (messageElement) => {
   const video = parent.document.querySelector("ytd-watch-flexy video.html5-main-video");
   if (!video || video.paused || (await waitForFilter(messageElement))) return;
-  if (messageElement.tagName.toLowerCase() !== "yt-live-chat-text-message-renderer") return;
+  const messageType = messageElement.tagName.toLowerCase();
 
-  const authorType = messageElement.getAttribute("author-type") || "guest";
-  const message = messageElement.querySelector("#message") ?? "";
-  var authorName = messageElement.querySelector("#author-name")?.textContent ?? "";
-  const time = Math.floor(video.currentTime);
+  switch(messageType) {
+    case "yt-live-chat-text-message-renderer": {
+      const authorType = messageElement.getAttribute("author-type") || "guest";
+      const message = messageElement.querySelector("#message") || "";
+      var authorName = messageElement.querySelector("#author-name")?.textContent || "";
+      const time = Math.floor(video.currentTime);
 
-  const newMessage = document.createElement('div');
-  const authorDiv = document.createElement('a');
-  var textDiv = document.createElement('div');
+      const newMessage = document.createElement('div');
+      newMessage.id = "text-message"
+      const authorDiv = document.createElement('a');
+      var textDiv = document.createElement('div');
 
-  authorDiv.style.display = "inline";
-  authorDiv.classList.add("newChat_authors_" + authorType);
-  textDiv.style.display = "inline";
+      authorDiv.style.display = "inline";
+      authorDiv.classList.add("Twitchy-Youtube-Chat_authors_" + authorType);
+      textDiv.style.display = "inline";
 
-  if (authorName.startsWith("@")) {
-    authorDiv.href = "https://youtube.com/" + authorName
-    authorDiv.target = "_blank";
-    authorDiv.rel = "noopener noreferrer";
+      if (authorName.startsWith("@")) {
+        authorDiv.href = "https://youtube.com/" + authorName
+        authorDiv.target = "_blank";
+        authorDiv.rel = "noopener noreferrer";
+      }
+      authorDiv.textContent = authorName + ": ";
+
+      textDiv = message;
+
+      newMessage.appendChild(authorDiv);
+      textDiv.classList.add("Twitchy-Youtube-Chat_messages");
+      newMessage.appendChild(textDiv);
+
+      twitchyChatBox.appendChild(newMessage);
+      break;
+    }
+    case "yt-live-chat-paid-message-renderer": {
+      const card = messageElement.querySelector("#card");
+      card.style.width = 85%
+      twitchyChatBox.appendChild(card);
+      break;
+    }
+    default: {
+      return;
+    }
   }
-  authorDiv.textContent = authorName + ": ";
-
-  textDiv = message;
-
-  newMessage.appendChild(authorDiv);
-  newMessage.appendChild(textDiv);
-
-  newChat.appendChild(newMessage);
 
   if (autoScroll) {
-    newChat.scrollTop = newChat.scrollHeight;
+    twitchyChatBox.scrollTop = twitchyChatBox.scrollHeight;
   }
 };
 
@@ -90,7 +106,7 @@ const observeMessages = async () => {
     const chatParent = await waitForElement("div#item-offset.style-scope.yt-live-chat-item-list-renderer");
     if (!chatParent) return;
     chatContainer.style.display = 'none';
-    chatParent.appendChild(newChat);
+    chatParent.appendChild(twitchyChatBox);
 
     observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
@@ -116,7 +132,7 @@ const observeMessages = async () => {
 })();
 
 const reloadChat = async () => {
-  while (newChat.firstChild) {
-    newChat.removeChild(newChat.firstChild);
+  while (twitchyChatBox.firstChild) {
+    twitchyChatBox.removeChild(twitchyChatBox.firstChild);
   }
 };
