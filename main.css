@@ -4,8 +4,64 @@
   See LICENSE file for details. 
 */
 
+:root {
+  --Twitchy-Youtube-Chat_text_color: white;
+  --Twitchy-Youtube-Chat_paid_message_background_color: rgba(21, 101, 192, 1);
+  --Twitchy-Youtube-Chat_staff_margin: 10px;
+
+  --yt-live-chat-secondary-text-color: var(--Twitchy-Youtube-Chat_guest_color) !important;
+  --yt-live-chat-sponsor-color: var(--Twitchy-Youtube-Chat_member_color) !important;
+  --yt-live-chat-secondary-text-color: var(--Twitchy-Youtube-Chat_member_color) !important;
+  --yt-live-chat-moderator-color: var(--Twitchy-Youtube-Chat_moderator_color) !important;
+  --yt-live-chat-owner-color: var(--Twitchy-Youtube-Chat_owner_color) !important;
+  --yt-live-chat-paid-message-background-color: var(--Twitchy-Youtube-Chat_paid_message_background_color) !important;
+}
+
+.hex-picker-container
+{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 5px;
+    color : var(--Twitchy-Youtube-Chat_text_color);
+}
+
+#guest_color_picker,
+#member_color_picker,
+#moderator_color_picker,
+#owner_color_picker
+{
+    -webkit-appearance: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+#guest_color_picker::-webkit-color-swatch-wrapper,
+#member_color_picker::-webkit-color-swatch-wrapper,
+#moderator_color_picker::-webkit-color-swatch-wrapper,
+#owner_color_picker::-webkit-color-swatch-wrapper
+{
+    padding: 0;
+}
+
+#guest_color_picker::-webkit-color-swatch,
+#member_color_picker::-webkit-color-swatch,
+#moderator_color_picker::-webkit-color-swatch,
+#owner_color_picker::-webkit-color-swatch
+{
+    border: none;
+}
+
+#guest_color_picker::-moz-color-swatch,
+#member_color_picker::-moz-color-swatch,
+#moderator_color_picker::-moz-color-swatch,
+#owner_color_picker::-moz-color-swatch
+{
+    border: none;
+}
+
 yt-live-chat-item-list-renderer[allow-scroll] #item-scroller.yt-live-chat-item-list-renderer {
-  overflow-y: hidden;
+  overflow-y: hidden !important;
 }
 
 .Twitchy-Youtube-Chat img.emoji,
@@ -35,19 +91,24 @@ yt-live-chat-item-list-renderer[allow-scroll] #item-scroller.yt-live-chat-item-l
   flex-wrap: wrap;
 }
 
+.Twitchy-Youtube-Chat_card {
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+
 .Twitchy-Youtube-Chat_authors_guest {
-  color: rgb(170, 170, 170);
+  color: var(--Twitchy-Youtube-Chat_guest_color);
   text-decoration: none;
 }
 .Twitchy-Youtube-Chat_authors_member {
-  color: rgb(33, 167, 0);
+  color: var(--Twitchy-Youtube-Chat_member_color);
   text-decoration: none;
 }
 .Twitchy-Youtube-Chat_authors_moderator {
-  color: rgb(38, 0, 255);
+  color: var(--Twitchy-Youtube-Chat_moderator_color);
   text-decoration: none;
 }
 .Twitchy-Youtube-Chat_authors_owner {
-  color: rgb(255, 0, 0);
+  color: var(--Twitchy-Youtube-Chat_owner_color);
   text-decoration: none;
 }
