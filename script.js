@@ -119,7 +119,6 @@ const processMessage = async (messageElement) => {
   if (!video || (await waitForFilter(messageElement))) return;
   const messageType = messageElement.tagName.toLowerCase();
 
-  console.log(messageType);
   switch(messageType) {
     case "yt-live-chat-text-message-renderer": { // Normal Message
       const authorType = messageElement.getAttribute("author-type") || "guest";

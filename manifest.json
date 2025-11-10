@@ -1,7 +1,7 @@
 {
    "manifest_version": 2,
    "name": "Twitchy Youtube Chat",
-   "version": "1.2",
+   "version": "1.2.1",
    "description": "Changes the YouTube live chat UI to look more similar to the Twitch chat's look.",
    "author": "SpiralDev",
    "content_scripts": [ 

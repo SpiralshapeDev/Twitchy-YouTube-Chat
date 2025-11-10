@@ -64,6 +64,10 @@ yt-live-chat-item-list-renderer[allow-scroll] #item-scroller.yt-live-chat-item-l
   overflow-y: hidden !important;
 }
 
+label#label.style-scope.yt-live-chat-text-input-field-renderer {
+  color: var(--Twitchy-Youtube-Chat_text_color);
+}
+
 .Twitchy-Youtube-Chat img.emoji,
 .Twitchy-Youtube-Chat img.small-emoji {
   width: 1.5em;
